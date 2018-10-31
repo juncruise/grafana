@@ -1,5 +1,5 @@
 import { LayoutMode } from '../core/components/LayoutSelector/LayoutSelector';
-import { Plugin } from './plugins';
+import { Plugin, PluginExports, PluginMeta } from './plugins';
 
 export interface DataSource {
   id: number;
@@ -12,10 +12,14 @@ export interface DataSource {
   password: string;
   user: string;
   database: string;
-  basicAuth: false;
-  isDefault: false;
+  basicAuth: boolean;
+  isDefault: boolean;
   jsonData: { authType: string; defaultRegion: string };
-  readOnly: false;
+  readOnly: boolean;
+  meta?: PluginMeta;
+  pluginExports?: PluginExports;
+  init?: () => void;
+  testDatasource?: () => Promise<any>;
 }
 
 export interface DataSourcesState {
@@ -25,5 +29,7 @@ export interface DataSourcesState {
   layoutMode: LayoutMode;
   dataSourcesCount: number;
   dataSourceTypes: Plugin[];
+  dataSource: DataSource;
+  dataSourceMeta: Plugin;
   hasFetched: boolean;
 }
